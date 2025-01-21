@@ -35,7 +35,7 @@ import { ref, reactive } from 'vue';
 import { MessagePlugin, type SubmitContext } from 'tdesign-vue-next';
 import type { TokenRequest } from '@/api/types';
 import tokenApi from '@/api/token';
-import { useAppStore } from '@/store';
+import { useAppStore, useUserStore } from '@/store';
 import { useRouter } from 'vue-router';
 // import { Icon } 
 // import { reactive } from 'vue';
@@ -65,6 +65,7 @@ const rules = {
 }
 
 const appStore = useAppStore();
+const userStore = useUserStore();
 const loading = ref(false);
 const router = useRouter();
 const handleLogin = async ({ validateResult }: SubmitContext) => {
@@ -74,6 +75,7 @@ const handleLogin = async ({ validateResult }: SubmitContext) => {
     loading.value = true;
     try {
         await appStore.login(loginFrom);
+        await userStore.fetchCurrentUser();
         await MessagePlugin.success('登录成功');
         await router.push({ name: "dashboard" })
     } finally {
