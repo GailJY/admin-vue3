@@ -1,12 +1,7 @@
 <template>
     <t-aside :width="appStore.menuCollapse ? '64px' : '234px'">
-        <t-menu :collapsed="appStore.menuCollapse">
-            <t-menu-item value="0">
-                <template #icon>
-                    <t-icon name="app" />
-                </template>
-                仪表盘
-            </t-menu-item>
+        <t-menu :collapsed="appStore.menuCollapse" :defaultValue="$route.name">
+            <sidebar-item v-for="item in permissionStore.menuRoutes" :key="item.name" :item="item"></sidebar-item>
         </t-menu>
     </t-aside>
 
@@ -14,7 +9,10 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/store';
+import SidebarItem from '@/components/SidebarItem.vue';
+import { usePermissionStore } from "@/store/permission";
 const appStore = useAppStore();
+const permissionStore = usePermissionStore();
 
 
 </script>
