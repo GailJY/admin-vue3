@@ -9,8 +9,24 @@ export type ErrorResponse = {
 }
 
 export type UserType = {
+    id: string;
     username: string;
     nickname: string;
     roles: Array<string>;
     permissions: Array<string>;
+}
+
+export interface Paging {
+    page?: number;
+    size?: number;
+    total?: number;
+}
+
+export type ListResult<T> = {
+    paging: Paging;
+    data: Array<T>;
+}
+
+export interface UserFilter extends Paging {
+    name: string;
 }
